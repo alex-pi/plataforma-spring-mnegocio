@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>mneg-tlp</artifactId>
+    <groupId>com.mx.mneg.tlp</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.mx.mneg.tlp</groupId>
+  <artifactId>mneg-tlp-servicios</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>mneg-tlp-servicios</name>
+  
+  <dependencies>
+	<dependency>
+		<groupId>com.mx.mneg.infra</groupId>
+		<artifactId>mneg-infra-utils</artifactId>
+	</dependency>  
+	<dependency>
+		<groupId>com.mx.mneg.tlp</groupId>
+		<artifactId>mneg-tlp-datos</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>org.springframework.context</artifactId>
+	</dependency>        
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>org.springframework.beans</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>org.springframework.core</artifactId>
+	</dependency>	        
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>org.springframework.expression</artifactId>
+	</dependency> 		
+  </dependencies>
+</project>
