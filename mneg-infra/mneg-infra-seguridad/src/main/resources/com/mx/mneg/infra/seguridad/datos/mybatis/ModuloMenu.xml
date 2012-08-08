@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mx.mneg.infra.seguridad.dao.ModuloMenuDao">
+
+	<resultMap type="ModuloMenu" id="resultModuloMenu">
+		<id property="id" column="id_t_opcion"/>
+		<result property="modulo" column="v_opcion"/>
+	</resultMap>
+
+	<select id="consultarTodos" resultMap="resultModuloMenu">
+		select * from seguridad.t_opcion_menu where id_t_opcion_padre is null;
+	</select>
+
+	<select id="consultarModulo" resultMap="resultModuloMenu">
+		select * from seguridad.t_opcion_menu where id_t_opcion = #{id};
+	</select>
+</mapper>

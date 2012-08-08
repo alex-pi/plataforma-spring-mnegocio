@@ -33,4 +33,14 @@ public class EjemploDaoTest extends BaseDaoTest {
 		
 		Assert.assertFalse(ejs.isEmpty());
 	}
+	
+	@Test
+	public void insertarEjemplo(){
+		Ejemplo e = new Ejemplo();
+		e.setNombre("Alex");
+		e.setApellido("Pi");
+		ejemploDao.insertarEjemplo(e);
+		
+		Assert.assertNotNull(e.getId());
+	}
 }

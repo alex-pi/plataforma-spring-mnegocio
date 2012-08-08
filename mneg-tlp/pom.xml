@@ -20,6 +20,7 @@
   	<module>mneg-tlp-modelo</module>
   	<module>mneg-tlp-datos</module>
   	<module>mneg-tlp-servicios</module>
+  	<module>mneg-tlp-web</module>
   </modules>  
   
  <repositories>	

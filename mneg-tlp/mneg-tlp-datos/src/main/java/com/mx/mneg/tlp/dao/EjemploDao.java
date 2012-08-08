@@ -18,4 +18,6 @@ import com.mx.mneg.tlp.modelo.Ejemplo;
 public interface EjemploDao {
 
 	List<Ejemplo> consultarTodos();
+	
+	void insertarEjemplo(Ejemplo ejemplo);
 }

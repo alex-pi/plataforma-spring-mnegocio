@@ -1,0 +1,64 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+       
+    <!-- con esto indicamos a Spring que tome en cuenta todas las anotaciones  @Required,
+	@Autowired, @PostConstruct, @PreDestroy and @Resource que coloquemos en nuestros beans de servicios. -->  
+	<context:annotation-config />
+	<!-- Se buscan todos los archivos de configuración de beans de servicios. Si el módulo maven de los servicios es
+			demasiado grande o se desea dividir por razones de control, los beans de servicio serán tomados automáticamente
+			siempre y cuando vivan dentro del paquete base com.mx.mneg.tlp.servicios-->       	
+	<import resource="classpath*:com/mx/mneg/tlp/servicios/**/*-config.xml" />
+	<!-- Usamos el mismo truco para obtener los archivos de configuración de beans de obtención de datos (típicamente Daos) -->
+	<import resource="classpath*:com/mx/mneg/tlp/datos/**/*-config.xml" />
+	<import resource="classpath*:com/mx/mneg/tlp/seguridad/**/*-config.xml" />
+	
+	<!-- La config del módulo de seguridad para usar ACL's -->
+	<import resource="classpath*:com/mx/mneg/infra/seguridad/seguridad-config.xml" />
+    
+	<!-- Creamos un "advice" para indicar cómo se comportará la transacción según los métodos que se llamen.
+		Igualmente, por default, si estos métodos lanzan un RuntimeException o un Error se hará rollback a la transacción. 
+		Si para cierto tipo de excepciones NO se desea hacer rollback se debe especificar en no-rollback-for -->           
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	    <tx:attributes>
+	        <!-- Los métodos de consulta -->
+	        <tx:method name="busca*" read-only="true"/>            
+	        <tx:method name="consulta*" read-only="true"/>
+	        <!-- todo lo demás tiene configuración default -->
+	        <tx:method name="*"/>
+	    </tx:attributes>
+	</tx:advice>
+	
+	<!-- Por último indicamos cuándo debe entrar en acción nuestro advice. En este caso será al ejecutar
+		cualquier método dentro de cualquier clase que en su línea de paquetes incluya uno que se llame "servicios" -->	
+	<aop:config>
+	    <aop:pointcut id="pointcutServicios" expression="execution(* com..*servicios..*.*(..))"/>
+	    <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcutServicios" order="1"/>
+	</aop:config>
+	
+	<!-- Archivos desde los cuales se obtendrán los mensajes que arroje la aplicación.
+		Los nombres estos archivos pueden ser:
+		WEB-INF/mensajes/messages.properties
+		WEB-INF/mensajes/messages_es.properties
+		WEB-INF/mensajes/messages_es_MX.properties -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+		  <list>
+		    <value>WEB-INF/mensajes/messages</value>
+		  </list>
+		</property>
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<property name="cacheSeconds" value="1" />
+	</bean>	       
+</beans>	
