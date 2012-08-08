@@ -3,9 +3,12 @@ package com.mx.mneg.tlp.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mx.mneg.tlp.modelo.Ejemplo;
 import com.mx.mneg.tlp.servicios.EjemploServicio;
 
 /**
@@ -38,5 +41,20 @@ public class EjemplosController {
 		} else if(ejemplo.equals(2)){
 			ejemploServicio.ejemploCodigoMensajeErrorNegocio();
 		}
+	}	
+	
+	/**
+	 * Ejemplo de envío y recepción de datos en formato Json usando
+	 * {@link @ResponseBody} y {@link @RequestBody}.
+	 * 
+	 * @param ejemplo
+	 * @return id de asignado a la entidad.
+	 */
+	@RequestMapping(value = "/guardar/json", method=RequestMethod.POST)
+	@ResponseBody
+	public Long guardarFormularioJson(@RequestBody Ejemplo ejemplo) {
+		ejemploServicio.guardarEjemplo(ejemplo);
+		
+		return ejemplo.getId();
 	}	
 }

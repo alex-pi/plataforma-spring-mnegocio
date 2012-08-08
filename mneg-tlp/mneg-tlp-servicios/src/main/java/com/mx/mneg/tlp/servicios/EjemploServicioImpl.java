@@ -2,9 +2,11 @@ package com.mx.mneg.tlp.servicios;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mx.mneg.infra.utils.ErrorNegocio;
+import com.mx.mneg.tlp.dao.EjemploDao;
 import com.mx.mneg.tlp.modelo.Ejemplo;
 
 /**
@@ -18,6 +20,9 @@ import com.mx.mneg.tlp.modelo.Ejemplo;
 public class EjemploServicioImpl implements EjemploServicio {
 
 	private static final Logger log = LoggerFactory.getLogger(EjemploServicioImpl.class);
+	
+	@Autowired
+	private EjemploDao ejemploDao;
 	
 	/**
 	 * Cuando se en encuentra un error o inconsistencia en el negocio se puede lanzar
@@ -47,5 +52,15 @@ public class EjemploServicioImpl implements EjemploServicio {
 		e.setApellido("Fowler");
 		throw new ErrorNegocio(new Object[]{}, "codigo.mensaje.ejemplo", e);
 	}	
+	
+	/**
+	 * Ejemplo de uso de un Dao desde clase de Servicios.
+	 *  
+	 */
+	public Long guardarEjemplo(Ejemplo ejemplo){
+		ejemploDao.insertarEjemplo(ejemplo);
+		
+		return ejemplo.getId();
+	}
 
 }

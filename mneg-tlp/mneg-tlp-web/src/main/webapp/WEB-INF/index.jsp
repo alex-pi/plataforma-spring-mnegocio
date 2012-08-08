@@ -11,9 +11,11 @@
 	<link rel="stylesheet" href="static/css/themes/smoothness/jquery-ui-1.8.22.css" media="screen">
 	<link rel="stylesheet" href="static/css/ejemplo.css" media="screen">  
     <script src="<c:url value="static/js/libs/jquery/jquery-1.7.2.js"/>" ></script>
+    <script src="<c:url value="static/js/libs/jquery/jquery.json-2.3.js"/>" ></script>
     <script src="<c:url value="static/js/libs/jquery/ui/jquery-ui-1.8.22.min.js"/>" ></script>
     <script src="<c:url value="static/js/libs/require/require.js"/>" ></script>
 	<script>
+		// Configuración inicial de requireJS.
 		require.config({
 // 			baseUrl: '<c:url value="/"/>',
 			// En producción hay que asegurarse de remover el cache bust. Una buena forma de usar
@@ -31,15 +33,24 @@
 				location: '<c:url value="/static/"/>js/libs/require'
 			}]
 		});
+		// Aqui le pedimos a requireJS algunas dependencias que debemos tener para la ejecución de nuestro script:
+			// app/init: Es un módulo JS que hará  algunas tareas de inicialización.
+			// req/text!/mvc/ejemplos/template: Usamos el plugin text para obtener un fragmento de html que usaremos posteriormente.
+			// 'req/domReady! : Es otro plugin que evita la ejecución de nuestro script hasta que el DOM haya sido cargado totalmente.
 		requirejs(['app/init', 'req/text!/mvc/ejemplos/template', 'req/domReady!'], function(initApp, template){
+			// Se ejecuta el módulo de incialización de la app.
 			initApp({
 				urlBase: '<c:url value="/mvc"/>'
 			});
+			// Aqui usamos ajax para provocar un error en el servidor y mostrar
+			// el manejo de errores.
 			$('#btnError1').button().click(function(){
 				$.get($.urlBase + "/ejemplos/error/simple/1", function() {});
 			});
+			// Insertamos el template obtenido por medio de requireJS y el plugin text.
 			var $template = $(template).css('display', 'none');
 			$('#btnError2').after($template);
+			// al dar click en este botón mostramos un segundo modo de usar el manejo de errores.
 			$('#btnError2').button().click(function(){
 				$.ajax({
 					  url: $.urlBase + "/ejemplos/error/simple/2",
@@ -56,23 +67,40 @@
 					  dataType: 'json'
 					});
 			});
+			
+			// Un botón para hacer logout.
 			$('#btnLogout').button().click(function(){
 				window.location.href='j_spring_security_logout';
 			});
 			
+			// Obentemos los módulos que puede ver el usuario actual y los mostramos
+			// en una lista simple.
 			$.ajax({
-				  url: $.urlBase + "/seguridad/menu/modulos",
-				  type: 'get',
-				  success: function (data){
-					  var $ul = $('<ul></ul>');
-					  $.each(data, function(idx, m){
-						  var $il = $('<li></li>').html(m.modulo);
-						  $ul.append($il);
-					  });
-					  $('#divDemoSeguridad').append($ul);
-					},
-				  dataType: 'json'
-				});			
+			  url: $.urlBase + "/seguridad/menu/modulos",
+			  type: 'get',
+			  success: function (data){
+				  var $ul = $('<ul></ul>');
+				  $.each(data, function(idx, m){
+					  var $il = $('<li></li>').html(m.modulo);
+					  $ul.append($il);
+				  });
+				  $('#divDemoSeguridad').append($ul);
+				},
+			  dataType: 'json'
+			});
+			
+			$('#btnEnviarJson').button().click(function(){
+				$.ajax({
+					  url: $.urlBase + "/ejemplos/guardar/json",
+					  type: 'post',
+					  data: $.toJSON({nombre: 'Alex', apellido: 'Pi'}),
+					  success: function (data){
+						  $('#respuestaJson').html('Registro exitoso con id: ' + data);
+					  },
+					  dataType: 'json',
+					  contentType: "application/json; charset=utf-8"
+					});
+			});
 		});
 	</script>
 </head>
@@ -121,6 +149,24 @@ acl-class
 Con la configuración adecuada se podría armar un menú de módulos->opciones-> sub opciones ...
 	</pre>
 <button id="btnLogout">Logout</button>
+</div>
+<div id="divDemoJson" class="box" style="float: left;">
+	<h5>Demo ajax/json.</h5>
+	<pre>
+Este ejemplo muestra como enviar y recibir información en formato json en una petición ajax.
+
+El objeto json que se envía es: 
+	{
+		nombre: 'Alex', 
+		apellido: 'Pi'
+	}
+
+La información es serializada/deserializada por medio se un MessageConverter de Spring que usa la librería Jackson.
+
+Ver archivo web-context.xml para verificar esta configuración.	
+	</pre>
+	<p id="respuestaJson"></p>
+<button id="btnEnviarJson">Enviar Json</button>
 </div>
 </body>
 </html>
