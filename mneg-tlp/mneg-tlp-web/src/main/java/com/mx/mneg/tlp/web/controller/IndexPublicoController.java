@@ -23,6 +23,7 @@ public class IndexPublicoController {
     
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView mostrarIndexPublico(){
+    	log.debug("Devolviendo vista del index público.");
     	
     	return new ModelAndView("publico/index");
     }

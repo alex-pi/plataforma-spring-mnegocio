@@ -13,10 +13,7 @@
 		select * from t_ejemplo;
 	</select>
 	
-	<insert id="insertarEjemplo" parameterType="Ejemplo" keyProperty="id">
-  		<selectKey keyProperty="id" resultType="long" order="BEFORE">
-  		     SELECT nextVal('t_ejemplo_seq')
-  		</selectKey> 	  		
-		insert into t_ejemplo (id_t_ejemplo,c_nombre,c_apellido) values (#{id},#{nombre},#{apellido});
+	<insert id="insertarEjemplo" parameterType="Ejemplo" keyProperty="id" useGeneratedKeys="true"> 		
+		insert into t_ejemplo (c_nombre,c_apellido) values (#{nombre},#{apellido});
 	</insert>	
 </mapper>

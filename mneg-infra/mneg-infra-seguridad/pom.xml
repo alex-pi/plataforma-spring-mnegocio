@@ -12,6 +12,30 @@
   <version>0.9.0</version>
   <name>mneg-infra-seguridad</name>
   
+  <profiles>
+    <profile>
+      <id>testing</id>
+      <properties>     
+        <nombre.profile>testing</nombre.profile>
+        <modo.log>debug</modo.log>
+      </properties>
+    </profile>
+    <profile>
+      <id>produccion</id>
+      <properties>      
+        <nombre.profile>produccion</nombre.profile>
+        <modo.log>error</modo.log>
+      </properties>
+    </profile>
+    <profile>
+      <id>desarrollo</id>
+      <properties>
+        <nombre.profile>desarrollo</nombre.profile>
+        <modo.log>debug</modo.log>
+      </properties>      
+    </profile>       
+  </profiles>  
+  
   <dependencies>
   	<dependency>
 		<groupId>com.mx.mneg.infra</groupId>
@@ -29,9 +53,9 @@
 		<version>1.4</version>
 	</dependency>  
 	<dependency>
-		<groupId>postgresql</groupId>
-		<artifactId>postgresql</artifactId>
-		<version>8.4-702.jdbc4</version>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.21</version>
 	</dependency>		
 	<dependency>
 	    <groupId>org.springframework</groupId>
@@ -92,4 +116,14 @@
 		</exclusions>
 	</dependency>		
   </dependencies>
+  
+  <build>
+   	<resources>
+	    <resource>
+	        <filtering>true</filtering>
+	        <directory>src/main/resources</directory>
+	        <targetPath>.</targetPath>
+	    </resource>   	
+  	</resources>
+  </build>  
 </project>

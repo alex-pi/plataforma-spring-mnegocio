@@ -20,15 +20,15 @@
 	</resultMap>	
 
 	<select id="consultarTodos" resultMap="resultOpcionMenu">
-		select * from seguridad.t_opcion_menu;
+		select * from t_opcion_menu;
 	</select>
 	
 	<select id="consultarOpcion" resultMap="resultOpcionMenu">
-		select * from seguridad.t_opcion_menu where id_t_opcion = #{id};
+		select * from t_opcion_menu where id_t_opcion = #{id};
 	</select>
 	
 	<select id="consultarOpcionesHijas" resultMap="resultOpcionMenu">
-		select * from seguridad.t_opcion_menu
+		select * from t_opcion_menu
 		where id_t_opcion_padre = #{idPadre};	
 	</select>	
 	
@@ -42,8 +42,8 @@
 		op_h.v_descripcion as v_descripcion_h,
 		op_h.v_opcion as v_opcion_h,
 		op_h.v_url as v_url_h
-		from seguridad.t_opcion_menu op_p
-		left join seguridad.t_opcion_menu op_h on op_p.id_t_opcion = op_h.id_t_opcion_padre
+		from t_opcion_menu op_p
+		left join t_opcion_menu op_h on op_p.id_t_opcion = op_h.id_t_opcion_padre
 		where op_p.id_t_opcion = #{idPadre};
 	</select>
 </mapper>

@@ -98,7 +98,7 @@ public class ManejadorErroresJson
 
     private String[] filtrados = { "excepcion" };
 
-    private Integer códigoErrorHttpDefualt = 503;
+    private Integer codigoErrorHttpDefualt = 503;
 
     private boolean esProfileDesarrollo;
     
@@ -134,7 +134,7 @@ public class ManejadorErroresJson
         Map infoMap = prepararMapaInformacion(info);
         Map infoFiltrada = filtrarInfoError(infoMap);
 
-        aplicarCódigoErrorHttp(request, response, códigoErrorHttpDefualt);
+        aplicarCódigoErrorHttp(request, response, codigoErrorHttpDefualt);
 
         JsonGenerator generator = null;
         try {
@@ -287,7 +287,7 @@ public class ManejadorErroresJson
         UsuarioSeguridad usuario = SeguridadUtil.getUsuarioActual();
         info.setUsuario(usuario);
         info.setClaseExcepcion(ex.getClass());
-        info.setStatus(códigoErrorHttpDefualt);
+        info.setStatus(codigoErrorHttpDefualt);
 
         String mensaje = messageSource.getMessage("general.mensajeError.default", new Object[]{},
                                                   "Ocurrió un error inesperado. Consulte con el administrador usando la clave del error.", LocaleUtil.getLocale());
@@ -423,7 +423,7 @@ public class ManejadorErroresJson
      * @param códigoErrorHttpDefualt the códigoErrorHttpDefualt to set
      */
     public void setCódigoErrorHttpDefualt(Integer códigoErrorHttpDefualt) {
-        this.códigoErrorHttpDefualt = códigoErrorHttpDefualt;
+        this.codigoErrorHttpDefualt = códigoErrorHttpDefualt;
     }
 
     /**

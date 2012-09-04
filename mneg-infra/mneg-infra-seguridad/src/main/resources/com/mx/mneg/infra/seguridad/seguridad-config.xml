@@ -112,8 +112,8 @@
 	    
 	<beans profile="desarrollo,testing">
 		<bean id="dataSourceSeguridad" class="org.apache.commons.dbcp.BasicDataSource">
-			<property name="driverClassName" value="org.postgresql.Driver" />
-			<property name="url" value="jdbc:postgresql://localhost:5432/mnegocio" />
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url" value="jdbc:mysql://localhost:3306/mnegocio_seg" />
 			<property name="username" value="pruebas" />
 			<property name="password" value="pruebas" />
 			<property name="initialSize" value="2" />
@@ -128,7 +128,7 @@
 	</beans>  
 	
 	<beans profile="produccion">
-		<!-- Aqui se podría agregar un datasource a un recurso JNDI -->
+		<!-- Aqui se podría agregar un datasource a un recurso JNDI, o a un pool con más conexiones. -->
 	</beans>
 			
 </beans>

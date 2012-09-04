@@ -9,10 +9,10 @@
 	</resultMap>
 
 	<select id="consultarTodos" resultMap="resultModuloMenu">
-		select * from seguridad.t_opcion_menu where id_t_opcion_padre is null;
+		select * from t_opcion_menu where id_t_opcion_padre is null;
 	</select>
 
 	<select id="consultarModulo" resultMap="resultModuloMenu">
-		select * from seguridad.t_opcion_menu where id_t_opcion = #{id};
+		select * from t_opcion_menu where id_t_opcion = #{id};
 	</select>
 </mapper>
