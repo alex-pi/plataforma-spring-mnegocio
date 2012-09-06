@@ -27,7 +27,7 @@ CREATE TABLE `t_ejemplo` (
   `c_nombre` varchar(50) DEFAULT NULL,
   `c_apellido` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_t_ejemplo`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `t_ejemplo` (
 
 LOCK TABLES `t_ejemplo` WRITE;
 /*!40000 ALTER TABLE `t_ejemplo` DISABLE KEYS */;
-INSERT INTO `t_ejemplo` VALUES (1,'Alejandro','Pimentel'),(6,'Alex','Pi');
+INSERT INTO `t_ejemplo` VALUES (1,'Alejandro','Pimentel'),(6,'Alex','Pi'),(7,'Alex','Pi'),(16,'Alex','Pi'),(17,'Alex','Pi'),(18,'Alex','Pi');
 /*!40000 ALTER TABLE `t_ejemplo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-09-03 21:42:45
+-- Dump completed on 2012-09-05 23:47:50

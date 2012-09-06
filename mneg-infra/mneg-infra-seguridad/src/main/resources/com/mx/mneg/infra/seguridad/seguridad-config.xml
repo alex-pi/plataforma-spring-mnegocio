@@ -50,7 +50,7 @@
 	<bean id="txManagerSeguridad" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 	    p:dataSource-ref="dataSourceSeguridad" />
 	    
-	<bean id="sepUserDetailsService" class="com.mx.mneg.infra.seguridad.servicios.CustomUserDetailsService">
+	<bean id="customUserDetailsService" class="com.mx.mneg.infra.seguridad.servicios.CustomUserDetailsService">
 	</bean>
 	
     <bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">

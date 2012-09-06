@@ -18,10 +18,10 @@
         <form-login login-page="/login.jsp" default-target-url="/" always-use-default-target="true" />
     </http>
     
-    <!-- Al indicar que usaremos el bean sepUserDetailsService decimos que usaremos el modo 
+    <!-- Al indicar que usaremos el bean customUserDetailsService decimos que usaremos el modo 
     	de autenticación implementado por el módulo maven mneg-infra-seguridad -->
     <authentication-manager>
-        <authentication-provider user-service-ref="sepUserDetailsService">
+        <authentication-provider user-service-ref="customUserDetailsService">
         </authentication-provider>
     </authentication-manager> 
     

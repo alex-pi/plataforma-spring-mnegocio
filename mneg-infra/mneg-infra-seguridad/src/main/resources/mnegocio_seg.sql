@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `acl_class`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acl_class` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `class` varchar(100) NOT NULL,
+  `class` varchar(100) NOT NULL COMMENT 'Aqui se debe colocar el nombre calificado de una clase, ya que estamos usando la implementación default de ACL''s de Spring.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `acl_class_class_key` (`class`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Catálogo de clases cuyas instancias se quieren asegurar.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,16 +52,16 @@ CREATE TABLE `acl_entry` (
   `ace_order` int(11) NOT NULL,
   `audit_failure` tinyint(1) NOT NULL,
   `audit_success` tinyint(1) NOT NULL,
-  `granting` tinyint(1) NOT NULL,
-  `mask` int(11) NOT NULL,
-  `acl_object_identity` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
+  `granting` tinyint(1) NOT NULL COMMENT 'Indica si se está cediendo o denegando el permiso.',
+  `mask` int(11) NOT NULL COMMENT 'Puede tomar los valores: 1-Read,2-Write,4-Create,8-Delete,16-Administer.',
+  `acl_object_identity` int(11) NOT NULL COMMENT 'La referencia al objeto que se está asegurando.',
+  `sid` int(11) NOT NULL COMMENT 'El sid al cual se le asigna el permiso.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `acl_entry_acl_object_identity_key` (`acl_object_identity`,`ace_order`),
   KEY `fk_acl_entry_acl_sid` (`sid`),
-  CONSTRAINT `fk_acl_entry_acl_sid` FOREIGN KEY (`sid`) REFERENCES `acl_sid` (`id`),
-  CONSTRAINT `fk_acl_entry_acl_object_identity` FOREIGN KEY (`acl_object_identity`) REFERENCES `acl_object_identity` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_acl_entry_acl_object_identity` FOREIGN KEY (`acl_object_identity`) REFERENCES `acl_object_identity` (`id`),
+  CONSTRAINT `fk_acl_entry_acl_sid` FOREIGN KEY (`sid`) REFERENCES `acl_sid` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COMMENT='Cada entrada representa un permiso a un objeto.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,16 +84,16 @@ DROP TABLE IF EXISTS `acl_object_identity`;
 CREATE TABLE `acl_object_identity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entries_inheriting` tinyint(1) NOT NULL,
-  `object_id_identity` int(11) NOT NULL,
-  `object_id_class` int(11) NOT NULL,
+  `object_id_identity` int(11) NOT NULL COMMENT 'El identificador del objeto que se asegura.',
+  `object_id_class` int(11) NOT NULL COMMENT 'Referencia al tipo del objeto',
   `parent_object` int(11) DEFAULT NULL,
-  `owner_sid` int(11) DEFAULT NULL,
+  `owner_sid` int(11) DEFAULT NULL COMMENT 'Se recomienda que sea el principal de un administrador.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `acl_object_identity_object_id_class_key` (`object_id_class`,`object_id_identity`),
   KEY `fk_acl_object_identity_acl_sid` (`owner_sid`),
-  CONSTRAINT `fk_acl_object_identity_acl_sid` FOREIGN KEY (`owner_sid`) REFERENCES `acl_sid` (`id`),
-  CONSTRAINT `fk_acl_object_identity_acl_class` FOREIGN KEY (`object_id_class`) REFERENCES `acl_class` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_acl_object_identity_acl_class` FOREIGN KEY (`object_id_class`) REFERENCES `acl_class` (`id`),
+  CONSTRAINT `fk_acl_object_identity_acl_sid` FOREIGN KEY (`owner_sid`) REFERENCES `acl_sid` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Catálogo de objetos a asegurar.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,11 +115,11 @@ DROP TABLE IF EXISTS `acl_sid`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acl_sid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `principal` tinyint(1) NOT NULL,
-  `sid` varchar(100) NOT NULL,
+  `principal` tinyint(1) NOT NULL COMMENT 'Indica (true) si se trata de un principal indiviudal. Típicamente un Usuario. False si es algún rol (authority).',
+  `sid` varchar(100) NOT NULL COMMENT 'El identificador de algún usuario (principal). O algún nombre de rol (authority).',
   PRIMARY KEY (`id`),
   UNIQUE KEY `acl_sid_sid_key` (`sid`,`principal`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Security identity. P.e. un rol o un principal.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,11 +144,11 @@ CREATE TABLE `t_opcion_menu` (
   `v_descripcion` varchar(120) NOT NULL,
   `v_opcion` varchar(80) NOT NULL,
   `v_url` varchar(200) DEFAULT NULL,
-  `id_t_opcion_padre` int(11) DEFAULT NULL,
+  `id_t_opcion_padre` int(11) DEFAULT NULL COMMENT 'Referencia a la opción padre.',
   PRIMARY KEY (`id_t_opcion`),
   KEY `fk_t_opcion_padre` (`id_t_opcion_padre`),
   CONSTRAINT `fk_t_opcion_padre` FOREIGN KEY (`id_t_opcion_padre`) REFERENCES `t_opcion_menu` (`id_t_opcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COMMENT='Opciones de menú de la aplicación.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,8 +173,8 @@ CREATE TABLE `t_r_usuario_rol` (
   `id_tr_rol` int(11) NOT NULL,
   PRIMARY KEY (`id_tr_usuario`,`id_tr_rol`),
   KEY `t_r_usuario_rol_id_tr_rol_fkey` (`id_tr_rol`),
-  CONSTRAINT `t_r_usuario_rol_id_tr_usuario_fkey` FOREIGN KEY (`id_tr_usuario`) REFERENCES `t_usuario_seguridad` (`id_t_usuario`),
-  CONSTRAINT `t_r_usuario_rol_id_tr_rol_fkey` FOREIGN KEY (`id_tr_rol`) REFERENCES `t_rol_seguridad` (`id_t_rol`)
+  CONSTRAINT `t_r_usuario_rol_id_tr_rol_fkey` FOREIGN KEY (`id_tr_rol`) REFERENCES `t_rol_seguridad` (`id_t_rol`),
+  CONSTRAINT `t_r_usuario_rol_id_tr_usuario_fkey` FOREIGN KEY (`id_tr_usuario`) REFERENCES `t_usuario_seguridad` (`id_t_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -197,11 +197,11 @@ DROP TABLE IF EXISTS `t_rol_seguridad`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_rol_seguridad` (
   `id_t_rol` int(11) NOT NULL AUTO_INCREMENT,
-  `v_rol` varchar(30) NOT NULL,
-  `l_rol_activo` tinyint(1) NOT NULL DEFAULT '1',
+  `v_rol` varchar(30) NOT NULL COMMENT 'Debe iniciar siempre con el prefijo ROLE_',
+  `l_rol_activo` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Indica si el rol está activo o no.',
   PRIMARY KEY (`id_t_rol`),
   UNIQUE KEY `t_rol_seguridad_v_rol_key` (`v_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Roles de seguridad de la aplicación.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,11 +225,11 @@ CREATE TABLE `t_usuario_seguridad` (
   `id_t_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `v_username` varchar(50) NOT NULL,
   `v_password` varchar(25) NOT NULL,
-  `v_nombre_usuario` varchar(100) NOT NULL,
-  `l_usuario_activo` tinyint(1) NOT NULL DEFAULT '1',
+  `v_nombre_usuario` varchar(100) NOT NULL COMMENT 'Nombre completo del usuario.',
+  `l_usuario_activo` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Indica si el usuario está activo o no.',
   PRIMARY KEY (`id_t_usuario`),
   UNIQUE KEY `t_usuario_seguridad_v_username_key` (`v_username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Usuarios de la aplicación.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,4 +251,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-09-03 21:41:08
+-- Dump completed on 2012-09-05 23:48:07

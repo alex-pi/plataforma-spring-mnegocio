@@ -41,18 +41,18 @@ import com.mx.mneg.infra.utils.seguridad.SeguridadUtil;
  *  El siguiente es un ejemplo de configuración típica.
  * <pre>
  * {@code
- *        <bean class="mx.sep.sajja.web.util.ManejadorErroresJson">
+ *        <bean class="com.mx.mneg.infra.utils.web.ManejadorErroresJson">
  *            <property name="mapeoExcepciones">
  *                <map>
  *                    <!-- Para asignar un notificador a una Excepción. Si no se establece un notificador
  *                    para una excepción más específica se elige el notificador de la super clase más cercana
  *                    en la jerarquía de herencia.-->
- *                    <entry key="mx.sep.sajja.servicios.util.ErrorNegocio" value-ref="notificacionLog"></entry>
+ *                    <entry key="com.mx.mneg.infra.utils.ErrorNegocio" value-ref="notificacionLog"></entry>
  *
  *                    <!-- En este caso no se elige notificador. Si se especifica un servicioNotificaciónDefault
  *                    se usará este, de otro modo no se notificará el error. El error hacia presentación siempre
  *                    se genera.-->
- *                    <entry key="mx.sep.sajja.servicios.util.ErrorInfraestructura" value=""></entry>
+ *                    <entry key="com.mx.mneg.infra.utils.ErrorInfraestructura" value=""></entry>
  *    
  *                    <entry key="java.lang.RuntimeException" value=""></entry>
  *                </map>
@@ -61,14 +61,14 @@ import com.mx.mneg.infra.utils.seguridad.SeguridadUtil;
  *                <map>
  *                    <!-- Se coloca en value el nivel del error generado. En realidad se puede colocar la
  *                    leyenda que se desee -->
- *                    <entry key="mx.sep.sajja.servicios.util.ErrorNegocio" value="ERROR DE NEGOCIO"></entry>
- *                    <entry key="mx.sep.sajja.servicios.util.ErrorInfraestructura" value="ERROR GRAVE"></entry>
+ *                    <entry key="com.mx.mneg.infra.utils.ErrorNegocio" value="ERROR DE NEGOCIO"></entry>
+ *                    <entry key="com.mx.mneg.infra.utils.ErrorInfraestructura" value="ERROR GRAVE"></entry>
  *                    <entry key="java.lang.RuntimeException" value="ERROR NO IDENTIFICADO"></entry>
  *                </map>
  *            </property>
  *            <property name="servicioNotificacionDefault" ref="notificacionLog" />
  *        </bean>
- *       <bean id="notificacionLog" class="mx.sep.sajja.web.util.ServicioNotificacionLog" />
+ *       <bean id="notificacionLog" class="com.mx.mneg.infra.utils.web.ServicioNotificacionLog" />
  * }
  * </pre>
  *
