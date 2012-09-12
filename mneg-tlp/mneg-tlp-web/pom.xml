@@ -27,7 +27,7 @@
       <properties>      
         <nombre.profile>produccion</nombre.profile>
         <modo.log>error</modo.log>
-        <dir.log>/tmp</dir.log>
+        <dir.log>/logapp</dir.log>
       </properties>
     </profile>
     <profile>

@@ -129,6 +129,14 @@
 	
 	<beans profile="produccion">
 		<!-- Aqui se podría agregar un datasource a un recurso JNDI, o a un pool con más conexiones. -->
+		<bean id="dataSourceSeguridad" class="org.apache.commons.dbcp.BasicDataSource">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url" value="jdbc:mysql://MNMCDEV02:3306/mnegocio_seg" />
+			<property name="username" value="root" />
+			<property name="password" value="m4sn3g0c10" />
+			<property name="initialSize" value="30" />
+			<property name="maxActive" value="70" />
+		</bean>		
 	</beans>
 			
 </beans>
