@@ -32,3 +32,23 @@ pre {
 	font-size: 12px;
 }
 
+input{
+	font-family:arial; 				
+	background-color:white; 
+	border:#CDCDCD; 
+	border-style:solid; 
+	border-top-width:1px; 
+	border-right-width:2px; 
+	border-bottom-width:2px; 
+	border-left-width:1px; 
+	border-radius:5px; 								
+}
+			
+table{width:100%}
+
+.right{text-align:right; width:50%;}
+.left{text-align:left; width:50%;}
+.center{text-align:center;}
+.validacion{color:red; z-index:100; position: relative; top: 0; left: 0;}
+.validado{color:green;}
+

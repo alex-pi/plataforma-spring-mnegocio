@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="static/css/ejemplo.css" media="screen">  
     <script src="<c:url value="static/js/libs/jquery/jquery-1.7.2.js"/>" ></script>
     <script src="<c:url value="static/js/libs/jquery/jquery.json-2.3.js"/>" ></script>
+    <script src="<c:url value="static/js/libs/jquery/jquery.blockUI.js"/>" ></script>
     <script src="<c:url value="static/js/libs/jquery/ui/jquery-ui-1.8.22.min.js"/>" ></script>
     <script src="<c:url value="static/js/libs/require/require.js"/>" ></script>
 	<script>
@@ -101,6 +102,13 @@
 					  contentType: "application/json; charset=utf-8"
 					});
 			});
+			
+			$('#btnMostrarFormulario').button().click(function(){
+				requirejs(['app/captura', 'req/text!static/html/captura.html'], function(captura, capturaHtml){
+					$('#divDemoFormulario').append(capturaHtml);
+					captura($('#divDemoFormulario'));
+				});
+			});
 		});
 	</script>
 </head>
@@ -134,7 +142,7 @@ Este ejemplo muestra las posibilidades que se tienen en cuanto a manejo de error
 	<button id="btnError2">Error con info extra</button>
 	
 </div>
-<div id="divDemoSeguridad" class="box" style="float: left;">
+<div id="divDemoSeguridad" class="box" style="float: right;">
 	<h5>Demo seguridad.</h5>
 	<pre>
 Aqui se muestra una lista de los módulos a los que tiene acceso el usuario: ${usuario.username}
@@ -144,14 +152,14 @@ El módulo de seguridad obtiene esta información por medio de las tablas de ACL
 acl_sid
 acl_entry
 acl_object_identity
-acl-class
+acl_class
 
 Con la configuración adecuada se podría armar un menú de módulos->opciones-> sub opciones ...
 	</pre>
 <button id="btnLogout">Logout</button>
 </div>
-<div id="divDemoJson" class="box" style="float: left;">
-	<h5>Demo ajax/json.</h5>
+<div id="divDemoJson" class="box" style="float: right;">
+<h5>Demo ajax/json.</h5>	
 	<pre>
 Este ejemplo muestra como enviar y recibir información en formato json en una petición ajax.
 
@@ -167,6 +175,10 @@ Ver archivo web-context.xml para verificar esta configuración.
 	</pre>
 	<p id="respuestaJson"></p>
 <button id="btnEnviarJson">Enviar Json</button>
+</div>
+<div id="divDemoFormulario" class="box" style="clear: left;">
+<h5>Demo formulario.</h5>
+<button id="btnMostrarFormulario">Cargar forma</button>
 </div>
 </body>
 </html>
