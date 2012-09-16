@@ -27,7 +27,7 @@
 		<!-- Archivo de principales configuraciones de mybatis. Settings como el cache van en este archivo. -->
 		<property name="configLocation" value="classpath:com/mx/mneg/tlp/datos/mybatis-sqlmap.xml" />
 		<!-- Con esta propiedad pedimos al SessionFactory que al referir a una clase de nuestro modelo
-			sólo tengamos que mencionar su nombre (y no le paquete completo). -->
+			sólo tengamos que mencionar su nombre (y no el paquete completo). -->
 		<property name="typeAliasesPackage" value="com.mx.mneg.tlp.modelo" />
 		<!-- La ubicación de todos mapeos de SQL que mybatis tomará. -->
 		<property name="mapperLocations" value="classpath*:com/mx/mneg/tlp/datos/mybatis/**/*.xml" />
@@ -39,7 +39,7 @@
 	    p:dataSource-ref="dataSource" />
 	
 	<!-- Aqui especificamos de dónde provendrán las conexiones a base de datos cuando ejecutemos en "profile" desarrollo. -->    
-	<beans profile="desarrollo,testing">
+	<beans profile="desarrollo">
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 			<property name="url" value="jdbc:mysql://localhost/mnegocio" />
@@ -50,6 +50,16 @@
 		</bean>
 	</beans>	    
 	
+	<beans profile="testing">
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url" value="jdbc:mysql://localhost/mnegocio_test" />
+			<property name="username" value="pruebas" />
+			<property name="password" value="pruebas" />
+			<property name="initialSize" value="2" />
+			<property name="maxActive" value="5" />
+		</bean>
+	</beans>	
 	<!-- Podemos agregar otros profiles si requerimos de otros ambientes aplicativos. -->
 	<beans profile="produccion">
 		<!-- Aqui se podría agregar un datasource a un recurso JNDI -->

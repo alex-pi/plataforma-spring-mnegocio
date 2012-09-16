@@ -2,12 +2,7 @@ define(function(){
 	
 	function init(config){
 		
-		$('body').ajaxError(function(e, jqxhr, settings, exception) {
-			if ( settings.error ) {
-				return;
-			}
-			$.showErrorDialog(jqxhr, jqxhr.statusText, exception);
-		});
+		$.blockUI.defaults.applyPlatformOpacityRules = false;
 	    
 	    jQuery.showErrorDialog = function(xhr, textStatus, thrownError){
 	        var obj = null;
@@ -37,8 +32,34 @@ define(function(){
 	            title: 'Error'
 	        });//dialog
 	    };
-	    
+	    		
+		$('body').ajaxError(function(e, jqxhr, settings, exception) {
+			if ( settings.error ) {
+				return;
+			}
+			$.showErrorDialog(jqxhr, jqxhr.statusText, exception);
+		});	
+		
 	    jQuery.urlBase = config.urlBase;
+	    
+	    (function($) {
+	    	$.fn.serializeFormJSON = function() {
+
+	    	   var o = {};
+	    	   var a = this.serializeArray();
+	    	   $.each(a, function() {
+	    	       if (o[this.name]) {
+	    	           if (!o[this.name].push) {
+	    	               o[this.name] = [o[this.name]];
+	    	           }
+	    	           o[this.name].push(this.value || '');
+	    	       } else {
+	    	           o[this.name] = this.value || '';
+	    	       }
+	    	   });
+	    	   return o;
+	    	};
+    	})(jQuery);
 	};
     
     return init;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mx.mneg.tlp.dao.DatosClienteDao">
+
+	<resultMap type="DatosCliente" id="datosClienteResult">
+		<id property="id" column="idDatosCliente"/>
+		<result property="nombre" column="razonSocial"/>
+		<result property="rfc" column="rfc"/>
+		<result property="calle" column="calle"/>
+		<result property="numExterior" column="numExterior"/>
+		<result property="numInterior" column="numInterior"/>
+		<result property="colonia" column="colonia"/>
+		<result property="municipio" column="delegacion"/>
+		<result property="localidad" column="localidad"/>
+		<result property="estado" column="entidadFederativa"/>
+		<result property="cp" column="codigoPostal"/>
+	</resultMap>
+
+	<select id="consultarTodos" resultMap="datosClienteResult">
+		select * from datosCliente;
+	</select>
+	
+	<select id="consultarPorRfc" resultMap="datosClienteResult">
+		select * from datosCliente where rfc = #{rfc};
+	</select>
+		
+	<insert id="insertar" parameterType="DatosCliente" keyProperty="id" useGeneratedKeys="true"> 		
+		insert into datosCliente values (
+		default,#{rfc},#{nombre},#{calle},
+		#{numExterior},#{numInterior},#{colonia},
+		#{municipio},#{localidad},#{estado},
+		#{cp}
+		);
+	</insert>	
+</mapper>

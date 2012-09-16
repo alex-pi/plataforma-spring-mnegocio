@@ -13,6 +13,7 @@
     <script src="<c:url value="static/js/libs/jquery/jquery-1.7.2.js"/>" ></script>
     <script src="<c:url value="static/js/libs/jquery/jquery.json-2.3.js"/>" ></script>
     <script src="<c:url value="static/js/libs/jquery/ui/jquery-ui-1.8.22.min.js"/>" ></script>
+    <script src="<c:url value="static/js/libs/jquery/jquery.blockUI.js"/>" ></script>
     <script src="<c:url value="static/js/libs/require/require.js"/>" ></script>
 	<script>
 		// Configuración inicial de requireJS.
@@ -23,6 +24,9 @@
 			// O bien el número de versión que se libera.
 			urlArgs: "bust=" +  (new Date()).getTime(),
 			packages: [{
+				name: 'html',
+				location: '<c:url value="/static/"/>html'
+			},{
 				name: 'dhtml',
 				location: '<c:url value="/mvc"/>'
 			},{
@@ -101,6 +105,14 @@
 					  contentType: "application/json; charset=utf-8"
 					});
 			});
+			
+			$('#btnMostrarRegistro').button().click(function(){
+				requirejs(['app/registroDatosFiscales', 'req/text!html/registroDatosFiscales.html'], function(registro, htmlFormulario){
+					var $div = $('#divRegistroFiscal');
+					$div.append(htmlFormulario);
+					registro.init($div);
+				});
+			});
 		});
 	</script>
 </head>
@@ -134,7 +146,7 @@ Este ejemplo muestra las posibilidades que se tienen en cuanto a manejo de error
 	<button id="btnError2">Error con info extra</button>
 	
 </div>
-<div id="divDemoSeguridad" class="box" style="float: left;">
+<div id="divDemoSeguridad" class="box" style="float: right;">
 	<h5>Demo seguridad.</h5>
 	<pre>
 Aqui se muestra una lista de los módulos a los que tiene acceso el usuario: ${usuario.username}
@@ -150,7 +162,7 @@ Con la configuración adecuada se podría armar un menú de módulos->opciones->
 	</pre>
 <button id="btnLogout">Logout</button>
 </div>
-<div id="divDemoJson" class="box" style="float: left;">
+<div id="divDemoJson" class="box" style="float: right;">
 	<h5>Demo ajax/json.</h5>
 	<pre>
 Este ejemplo muestra como enviar y recibir información en formato json en una petición ajax.
@@ -167,6 +179,10 @@ Ver archivo web-context.xml para verificar esta configuración.
 	</pre>
 	<p id="respuestaJson"></p>
 <button id="btnEnviarJson">Enviar Json</button>
+</div>
+<div id="divRegistroFiscal" class="box" style="float: left;">
+<h5>Demo registro.</h5>
+<button id="btnMostrarRegistro">Mostrar</button>
 </div>
 </body>
 </html>

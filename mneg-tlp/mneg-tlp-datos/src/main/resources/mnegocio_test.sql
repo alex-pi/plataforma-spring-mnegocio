@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.24, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: mnegocio
+-- Host: localhost    Database: mnegocio_test
 -- ------------------------------------------------------
 -- Server version	5.5.24-0ubuntu0.12.04.1
 
@@ -36,7 +36,7 @@ CREATE TABLE `datosCliente` (
   `codigoPostal` int(11) DEFAULT NULL,
   PRIMARY KEY (`idDatosCliente`),
   UNIQUE KEY `rfc_UNIQUE` (`rfc`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `datosCliente` (
 
 LOCK TABLES `datosCliente` WRITE;
 /*!40000 ALTER TABLE `datosCliente` DISABLE KEYS */;
-INSERT INTO `datosCliente` VALUES (2,'Alex','PIRA','Mi calle','74',NULL,'Copilco','Coyoacan','DF','DF',15300),(6,'Alejandro Pimentel','PIRA820426','Vulcanización','74','0','20 de Noviembre','V. Carranza','DF','DF',15300),(8,'Alejandro Pimentel1','PIRA8204261','Vulcanización','74','0','20 de Noviembre','V. Carranza','DF','DF',15300),(9,'Alejandro Pimentel11','PIRA8204261','Vulcanización','74','0','20 de Noviembre','V. Carranza','DF','DF',15300),(10,'Alejandro Pimentel4345','PIRA820426','Vulcanización','74','0','20 de Noviembre','V. Carranza','DF','DF',15300),(11,'PIRA820426','Alejandro Pimentel','Vulcanización','74','0','20 de Noviembre','V. Carranza','DF','DF',15300);
+INSERT INTO `datosCliente` VALUES (13,'PIRA820426','Alex','Mi calle','74',NULL,'Copilco','Coyoacan','DF','DF',15300);
 /*!40000 ALTER TABLE `datosCliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,4 +83,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-09-15 19:17:25
+-- Dump completed on 2012-09-15 19:17:36
