@@ -33,4 +33,16 @@ public class EjemploServicioImplTest extends BaseServicioTest {
 		
 		Assert.assertNotNull(e.getId());
 	}
+	
+	@Test
+	public void ejemploWebServiceTest(){
+		Assert.assertNotNull(ejemploServicio.ejemploWebService());
+	}
+	
+	@Test
+	public void generarFactura(){
+//		String payLoad = ejemploServicio.generarFactura("Hola mundo");
+//		
+//		Assert.assertNotNull(payLoad);
+	}
 }

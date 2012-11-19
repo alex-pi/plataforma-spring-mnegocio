@@ -1,10 +1,13 @@
 package com.mx.mneg.tlp.servicios;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masnegocio.mcdonalds.McDonalds;
 import com.mx.mneg.infra.utils.ErrorNegocio;
 import com.mx.mneg.tlp.dao.EjemploDao;
 import com.mx.mneg.tlp.modelo.Ejemplo;
@@ -23,6 +26,9 @@ public class EjemploServicioImpl implements EjemploServicio {
 	
 	@Autowired
 	private EjemploDao ejemploDao;
+	
+	@Resource(name="mcDonaldsService")
+	private McDonalds mcDonaldsService;
 	
 	/**
 	 * Cuando se en encuentra un error o inconsistencia en el negocio se puede lanzar
@@ -61,6 +67,14 @@ public class EjemploServicioImpl implements EjemploServicio {
 		ejemploDao.insertarEjemplo(ejemplo);
 		
 		return ejemplo.getId();
+	}
+	
+	public McDonalds ejemploWebService(){
+		return mcDonaldsService;
+	}
+	
+	public String generarFactura(String peticionFactura){
+		return this.mcDonaldsService.generarFactura(peticionFactura);
 	}
 
 }

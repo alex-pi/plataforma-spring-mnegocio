@@ -17,4 +17,12 @@
 	<!-- Activamos la creación de aspectos que usen @AspectJ -->
 	<aop:aspectj-autoproxy />
 	
+    <bean id="mcDonaldsService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+        <property name="wsdlDocumentUrl"  value="classpath:/McDonalds.wsdl" />
+        <property name="namespaceUri"     value="http://www.masnegocio.com/McDonalds/" />
+        <property name="serviceName"      value="McDonalds" />
+        <property name="portName"         value="McDonalds" />
+        <property name="serviceInterface" value="com.masnegocio.mcdonalds.McDonalds" />
+    </bean>	
+	
 </beans>

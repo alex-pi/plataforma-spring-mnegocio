@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.masnegocio.com/McDonalds/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="McDonalds"
+	targetNamespace="http://www.masnegocio.com/McDonalds/">
+	
+	<wsdl:types>
+    <xsd:schema targetNamespace="http://www.masnegocio.com/McDonalds/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="cadenajson" type="xsd:string"/>
+  	  <xsd:element name="respuesta" type="xsd:string"/>
+  	  <xsd:element name="consulta" type="xsd:string"/>
+  	  <xsd:element name="enviaemail" type="xsd:string"/>
+  	  <xsd:element name="respuestaemail" type="xsd:string"/>
+    </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="GenerarFacturaRequest">
+    <wsdl:part name="parameter" element="tns:cadenajson"/>
+  </wsdl:message>	
+	<wsdl:message name="GenerarFacturaResponse">
+	  <wsdl:part name="parameter" element="tns:respuesta"/>
+	</wsdl:message>
+	<wsdl:message name="ConsultaFacturaRequest">
+    <wsdl:part name="parameter" element="tns:consulta"/>
+	</wsdl:message>
+	<wsdl:message name="ConsultaFacturaResponse">
+    <wsdl:part name="parameter" element="tns:respuesta"/>
+	</wsdl:message>
+	<wsdl:message name="EnviaFacturaRequest">
+    <wsdl:part name="parameter" element="tns:enviaemail"/>
+	</wsdl:message>
+	<wsdl:message name="EnviaFacturaResponse">
+    <wsdl:part name="parameter" element="tns:respuestaemail"/>
+	</wsdl:message>
+
+	<wsdl:portType name="McDonalds">
+		<wsdl:operation name="GenerarFactura">
+			<wsdl:input message="tns:GenerarFacturaRequest"/>
+			<wsdl:output message="tns:GenerarFacturaResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ConsultaFactura">
+			<wsdl:input message="tns:ConsultaFacturaRequest"/>
+			<wsdl:output message="tns:ConsultaFacturaResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="EnviaFactura">
+			<wsdl:input message="tns:EnviaFacturaRequest"/>
+			<wsdl:output message="tns:EnviaFacturaResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+
+	<wsdl:binding name="McDonalds" type="tns:McDonalds">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    	<wsdl:operation name="GenerarFactura">
+      		<soap:operation soapAction="http://www.masnegocio.com/McDonalds/GenerarFactura"/>
+	      	<wsdl:input>
+	        	<soap:body use="literal"/>
+	      	</wsdl:input>
+	      	<wsdl:output>
+	        	<soap:body use="literal"/>
+      		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="ConsultaFactura">
+      		<soap:operation soapAction="http://www.masnegocio.com/McDonalds/ConsultaFactura"/>
+	      	<wsdl:input>
+	        	<soap:body use="literal"/>
+	      	</wsdl:input>
+	      	<wsdl:output>
+	        	<soap:body use="literal"/>
+      		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="EnviaFactura">
+      		<soap:operation soapAction="http://www.masnegocio.com/McDonalds/EnviaFactura"/>
+	      	<wsdl:input>
+	        	<soap:body use="literal"/>
+	      	</wsdl:input>
+	      	<wsdl:output>
+	        	<soap:body use="literal"/>
+      		</wsdl:output>
+    	</wsdl:operation>
+  	</wsdl:binding>
+	
+	<wsdl:service name="McDonalds">
+		<wsdl:port binding="tns:McDonalds" name="McDonalds">
+			<soap:address location="http://172.20.42.41/mcd/wsmcd/mcdonalds.php" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
